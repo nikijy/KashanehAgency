@@ -1,0 +1,15 @@
+F:\Kashaneh\Kashaneh\Kashaneh.Core\bin\Debug\netcoreapp3.1\Kashaneh.DataLayer.dll
+F:\Kashaneh\Kashaneh\Kashaneh.Core\obj\Debug\netcoreapp3.1\Kashaneh.Core.csprojAssemblyReference.cache
+F:\Kashaneh\Kashaneh\Kashaneh.Core\obj\Debug\netcoreapp3.1\Kashaneh.Core.AssemblyInfoInputs.cache
+F:\Kashaneh\Kashaneh\Kashaneh.Core\obj\Debug\netcoreapp3.1\Kashaneh.Core.AssemblyInfo.cs
+F:\Kashaneh\Kashaneh\Kashaneh.Core\bin\Debug\netcoreapp3.1\Kashaneh.Core.deps.json
+F:\Kashaneh\Kashaneh\Kashaneh.Core\bin\Debug\netcoreapp3.1\Kashaneh.Core.runtimeconfig.json
+F:\Kashaneh\Kashaneh\Kashaneh.Core\bin\Debug\netcoreapp3.1\Kashaneh.Core.runtimeconfig.dev.json
+F:\Kashaneh\Kashaneh\Kashaneh.Core\bin\Debug\netcoreapp3.1\Kashaneh.Core.dll
+F:\Kashaneh\Kashaneh\Kashaneh.Core\bin\Debug\netcoreapp3.1\Kashaneh.Core.pdb
+F:\Kashaneh\Kashaneh\Kashaneh.Core\bin\Debug\netcoreapp3.1\Kashaneh.DataLayer.pdb
+F:\Kashaneh\Kashaneh\Kashaneh.Core\obj\Debug\netcoreapp3.1\Kashaneh.Core.csproj.CoreCompileInputs.cache
+F:\Kashaneh\Kashaneh\Kashaneh.Core\obj\Debug\netcoreapp3.1\Kashaneh.Core.csproj.CopyComplete
+F:\Kashaneh\Kashaneh\Kashaneh.Core\obj\Debug\netcoreapp3.1\Kashaneh.Core.dll
+F:\Kashaneh\Kashaneh\Kashaneh.Core\obj\Debug\netcoreapp3.1\Kashaneh.Core.pdb
+F:\Kashaneh\Kashaneh\Kashaneh.Core\obj\Debug\netcoreapp3.1\Kashaneh.Core.genruntimeconfig.cache
