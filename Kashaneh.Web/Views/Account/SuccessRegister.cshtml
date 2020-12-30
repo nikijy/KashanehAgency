@@ -1,0 +1,20 @@
+﻿@model Kashaneh.DataLayer.Entities.User.User
+@{
+    ViewData["Title"] = "پایان ثبت نام";
+    Layout = "_Layout";
+}
+
+<div class="products-breadcrumb">
+    <div class="container">
+        <ul>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="/Home/Index">صفحه اصلی</a><span>|</span></li>
+            <li>پایان ثبت نام</li>
+        </ul>
+    </div>
+</div>
+
+<div class="alert alert-success">
+    <h2>@Model.UserName عزیز !</h2>
+    <p>ثبت نام شما انجام شد ، ایمیلی حاوی لینک فعالسازی به ایمیل "@Model.Email" ارسال شد .</p>
+    <p>جهت ادامه ثبت نام وارد ایمیل خود شوید و روی لینک کلیک کنید .</p>
+</div>
