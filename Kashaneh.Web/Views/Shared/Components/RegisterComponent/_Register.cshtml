@@ -1,0 +1,38 @@
+﻿@model Kashaneh.Core.DTOs.RegisterViewModel
+
+<div class="modal fade" id="modal-signup" tabindex="-1" role="dialog" aria-labelledby="modal-signup" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">ثبت نام</h4>
+            </div>
+            <form role="form" asp-action="Register" asp-controller="Account" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="نام کاربری" asp-for="UserName" class="form-control input-lg" placeholder="نام کاربری">
+                    </div>
+                    <div class="form-group">
+                        <input type="ایمیل" asp-for="Email" class="form-control input-lg" placeholder="ایمیل">
+                    </div>
+                    <div class="form-group">
+                        <input type="کلمه عبور" asp-for="Password" class="form-control input-lg" placeholder="کلمه عبور">
+                    </div>
+                    <div class="form-group">
+                        <input type="تکرار کلمه عبور" asp-for="RePassword" class="form-control input-lg" placeholder="تکرار کلمه عبور">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="agree"> آیا با قوانین <a href="#">سایت ما موافق هستید؟</a>
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p>آیا ثبت نام کرده اید؟ <a href="#modal-signin" data-toggle="modal" data-target="#modal-signin">ورود به سایت.</a></p>
+                    <input type="submit" class="btn btn-primary btn-block btn-lg" value="ثبت نام">
+                </div>
+            </form>
+            <div asp-validation-summary="All"></div>
+        </div>
+    </div>
+</div>
