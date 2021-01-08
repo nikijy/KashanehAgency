@@ -12,7 +12,7 @@ namespace Kashaneh.Core.Senders
         {
             MailMessage mail = new MailMessage();
             SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-            mail.From = new MailAddress("nikitmb2@gmail.com","تاپ لرن");
+            mail.From = new MailAddress("nikitmb2@gmail.com","املاک کاشانه");
             mail.To.Add(to);
             mail.Subject = subject;
             mail.Body = body;

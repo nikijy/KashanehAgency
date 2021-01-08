@@ -9,3 +9,4 @@ F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLay
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.dll
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.pdb
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.genruntimeconfig.cache
+F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.csprojAssemblyReference.cache

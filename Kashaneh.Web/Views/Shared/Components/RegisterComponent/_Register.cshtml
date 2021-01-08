@@ -10,16 +10,16 @@
             <form role="form" asp-action="Register" asp-controller="Account" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="نام کاربری" asp-for="UserName" class="form-control input-lg" placeholder="نام کاربری">
+                        <input type="text" asp-for="UserName" class="form-control input-lg" placeholder="نام کاربری">
                     </div>
                     <div class="form-group">
-                        <input type="ایمیل" asp-for="Email" class="form-control input-lg" placeholder="ایمیل">
+                        <input type="email" asp-for="Email" class="form-control input-lg" placeholder="ایمیل">
                     </div>
                     <div class="form-group">
-                        <input type="کلمه عبور" asp-for="Password" class="form-control input-lg" placeholder="کلمه عبور">
+                        <input type="password" asp-for="Password" class="form-control input-lg" placeholder="کلمه عبور">
                     </div>
                     <div class="form-group">
-                        <input type="تکرار کلمه عبور" asp-for="RePassword" class="form-control input-lg" placeholder="تکرار کلمه عبور">
+                        <input type="password" asp-for="RePassword" class="form-control input-lg" placeholder="تکرار کلمه عبور">
                     </div>
                     <div class="checkbox">
                         <label>

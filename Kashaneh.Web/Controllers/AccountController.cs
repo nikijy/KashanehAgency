@@ -11,6 +11,7 @@ using Kashaneh.Core.Security;
 using Kashaneh.Core.Senders;
 using Kashaneh.Core.Services.Interfaces;
 using Kashaneh.DataLayer.Entities.User;
+using Kashaneh.Web.ViewComponents;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -28,31 +29,32 @@ namespace Kashaneh.Web.Controllers
             this.viewRender = viewRender;
         }
 
-        #region register
-        [Route("Register")]
-        public IActionResult Register()
-        {
-            return View();
-        }
-        [Route("Register")]
+        // #region register
+        //[Route("Register")]
+        //public IActionResult Register()
+        //{
+        //    return View();
+        //}
+        //[Route("Register")]
         [HttpPost]
         public IActionResult Register(RegisterViewModel register)
         {
             if (!ModelState.IsValid)
             {
-                return View(register);
+               return ViewComponent("RegisterComponent");
             }
 
             if (_userService.IsExistUserName(register.UserName))
             {
                 ModelState.AddModelError("UserName", "نام کاربری معتبر نمیباشد");
-                return View(register);
+                //  return View();
+                  return ViewComponent("RegisterComponent");
             }
 
             if (_userService.IsExistEmail(register.Email))
             {
                 ModelState.AddModelError("Email", "ایمیل معتبر نمیباشد");
-                return View(register);
+                return ViewComponent("RegisterComponent");
             }
             DataLayer.Entities.User.User user = new User()
             {
@@ -75,25 +77,24 @@ namespace Kashaneh.Web.Controllers
 
 
             #endregion
-            return View("SuccessRegister", user);
+            return View("SuccessRegister", register);
         }
 
 
-        #endregion
+        //#endregion
 
         #region login
-        [Route("Login")]
-        public IActionResult Login()
-        {
-            return View();
-        }
+        //[Route("Login")]
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
         [HttpPost]
-        [Route("Login")]
         public IActionResult Login(LoginViewModel login, string ReturnUrl = "/")
         {
             if (!ModelState.IsValid)
             {
-                return View(login);
+                return ViewComponent("LoginComponent");
             }
 
             var user = _userService.LoginUser(login);
@@ -130,9 +131,9 @@ namespace Kashaneh.Web.Controllers
                 }
             }
             ModelState.AddModelError("Email", "کاربری با مشخصات وارد شده یافت نشد");
-            return View(login);
+            return ViewComponent("LoginComponent");
         }
-
+          
 
         #endregion
 

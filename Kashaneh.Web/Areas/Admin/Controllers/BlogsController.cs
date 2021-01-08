@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Kashaneh.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kashaneh.DataLayer.Context;
 using Kashaneh.DataLayer.Entities.Blog;
+using Microsoft.AspNetCore.Http;
 
 namespace Kashaneh.Web.Areas.Admin.Controllers
 {
@@ -14,10 +17,12 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
     public class BlogsController : Controller
     {
         private readonly KashanehContext _context;
+        private IUserService _userService;
 
-        public BlogsController(KashanehContext context)
+        public BlogsController(KashanehContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         // GET: Admin/Blogs
@@ -49,7 +54,6 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
         // GET: Admin/Blogs/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserName");
             return View();
         }
 
@@ -58,15 +62,30 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,UserId,CreateDate,Title,ShortDescription,Description,ImageName,IsDeleted,Visit")] Blog blog)
+        public async Task<IActionResult> Create([Bind("BlogId,Title,ShortDescription,Description,ImageName")] Blog blog, IFormFile image)
         {
+            var userId = _userService.GetUserIdByUserName(User.Identity.Name);
+            blog.UserId = userId;
+            blog.CreateDate = DateTime.Now;
+            blog.Visit = 0;
+            blog.IsDeleted = false;
             if (ModelState.IsValid)
             {
+                if (image != null && image.Length > 0)
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\BlogImages", fileName);
+                    await using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                    {
+                        await image.CopyToAsync(fileSteam);
+                    }
+                    blog.ImageName = fileName;
+                }
+
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", blog.UserId);
             return View(blog);
         }
 
@@ -83,7 +102,6 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserName", blog.UserId);
             return View(blog);
         }
 
@@ -92,8 +110,12 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BlogId,UserId,CreateDate,Title,ShortDescription,Description,ImageName,IsDeleted,Visit")] Blog blog)
+        public async Task<IActionResult> Edit(int id, [Bind("BlogId,Title,ShortDescription,Description,ImageName")] Blog blog, IFormFile image)
         {
+            var userId = _userService.GetUserIdByUserName(User.Identity.Name);
+            blog.UserId = userId;
+            blog.CreateDate = DateTime.Now;
+            blog.IsDeleted = false;
             if (id != blog.BlogId)
             {
                 return NotFound();
@@ -101,6 +123,35 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                if (image == null)
+                {
+                    blog.ImageName = blog.ImageName;
+                }
+                else
+                {
+                    string imagePath = "";
+                    if (blog.ImageName != image.FileName)
+                    {
+                        imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\BlogImages", blog.ImageName);
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+                    }
+
+                    if (image != null && image.Length > 0)
+                    {
+
+                        var fileName = Path.GetFileName(image.FileName);
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\BlogImages", fileName);
+                        await using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileSteam);
+                        }
+                        blog.ImageName = fileName;
+                    }
+                }
+               
                 try
                 {
                     _context.Update(blog);
@@ -119,7 +170,6 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", blog.UserId);
             return View(blog);
         }
 
@@ -148,7 +198,7 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var blog = await _context.Blogs.FindAsync(id);
-            _context.Blogs.Remove(blog);
+            blog.IsDeleted = true;
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

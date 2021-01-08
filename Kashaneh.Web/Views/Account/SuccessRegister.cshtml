@@ -1,17 +1,9 @@
-﻿@model Kashaneh.DataLayer.Entities.User.User
+﻿@model Kashaneh.Core.DTOs.RegisterViewModel
 @{
     ViewData["Title"] = "پایان ثبت نام";
-    Layout = "_Layout";
+    Layout = "_DefaultLayout";
 }
-
-<div class="products-breadcrumb">
-    <div class="container">
-        <ul>
-            <li><i class="fa fa-home" aria-hidden="true"></i><a href="/Home/Index">صفحه اصلی</a><span>|</span></li>
-            <li>پایان ثبت نام</li>
-        </ul>
-    </div>
-</div>
+}
 
 <div class="alert alert-success">
     <h2>@Model.UserName عزیز !</h2>

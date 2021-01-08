@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Kashaneh.DataLayer.Entities.Blog.Blog>
+﻿@using Kashaneh.Core.Convertors
+@model IEnumerable<Kashaneh.DataLayer.Entities.Blog.Blog>
 
 @{
     ViewData["Title"] = "Index";
@@ -23,7 +24,7 @@
                 @Html.DisplayNameFor(model => model.ImageName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.User.UserName)
             </th>
             <th></th>
         </tr>
@@ -32,13 +33,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CreateDate)
+               <label>@item.CreateDate.ToShamsi()</label>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageName)
+              <img src="/BlogImages/@item.ImageName" class="thumbnail"/>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.UserName)
