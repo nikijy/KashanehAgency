@@ -182,12 +182,18 @@ namespace Kashaneh.DataLayer.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Region")
+                        .HasColumnType("int");
+
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubEstateType")
                         .HasColumnType("int");
 
                     b.Property<string>("Tags")
@@ -205,6 +211,10 @@ namespace Kashaneh.DataLayer.Migrations
                     b.HasIndex("EstateStatusStatusId");
 
                     b.HasIndex("EstateTypeId");
+
+                    b.HasIndex("Region");
+
+                    b.HasIndex("SubEstateType");
 
                     b.HasIndex("UserId");
 
@@ -449,6 +459,14 @@ namespace Kashaneh.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Kashaneh.DataLayer.Entities.Estate.City", "Zone")
+                        .WithMany("Zone")
+                        .HasForeignKey("Region");
+
+                    b.HasOne("Kashaneh.DataLayer.Entities.Estate.EstateType", "SubType")
+                        .WithMany("SubType")
+                        .HasForeignKey("SubEstateType");
+
                     b.HasOne("Kashaneh.DataLayer.Entities.User.User", "User")
                         .WithMany("Estates")
                         .HasForeignKey("UserId")
@@ -461,7 +479,11 @@ namespace Kashaneh.DataLayer.Migrations
 
                     b.Navigation("EstateType");
 
+                    b.Navigation("SubType");
+
                     b.Navigation("User");
+
+                    b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("Kashaneh.DataLayer.Entities.Estate.EstateType", b =>
@@ -500,6 +522,8 @@ namespace Kashaneh.DataLayer.Migrations
                     b.Navigation("Cities");
 
                     b.Navigation("Estates");
+
+                    b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("Kashaneh.DataLayer.Entities.Estate.EstateStatus", b =>
@@ -512,6 +536,8 @@ namespace Kashaneh.DataLayer.Migrations
                     b.Navigation("Estates");
 
                     b.Navigation("EstateTypes");
+
+                    b.Navigation("SubType");
                 });
 
             modelBuilder.Entity("Kashaneh.DataLayer.Entities.User.Role", b =>

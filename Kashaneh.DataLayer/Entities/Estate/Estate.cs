@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Kashaneh.DataLayer.Entities.Estate
@@ -17,12 +18,17 @@ namespace Kashaneh.DataLayer.Entities.Estate
         [Display(Name = "نوع ملک")]
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         public int EstateTypeId { get; set; }
+        [Display(Name = "زیرمجموعه")]
+        public int? SubEstateType { get; set; }
+
         [Display(Name = "وضعیت ملک")]
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         public int StatusId { get; set; }
         [Display(Name = "شهر")]
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         public int CityId { get; set; }
+        [Display(Name = "منطقه")]
+        public int?  Region { get; set; }
         [Display(Name = "کاربر")]
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         public int UserId { get; set; }
@@ -73,9 +79,18 @@ namespace Kashaneh.DataLayer.Entities.Estate
 
         #region relations
 
+        [ForeignKey("CityId")]
         public virtual City City { get; set; }
+        [ForeignKey("Region")]
+        public virtual City Zone { get; set; }
+
         public virtual EstateStatus EstateStatus { get; set; }
+
+        [ForeignKey("EstateTypeId")]
         public virtual EstateType EstateType { get; set; }
+        [ForeignKey("SubEstateType")]
+        public EstateType SubType { get; set; }
+
         public virtual User.User User { get; set; } 
 
         

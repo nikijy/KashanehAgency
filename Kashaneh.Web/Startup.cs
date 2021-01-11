@@ -59,6 +59,7 @@ namespace Kashaneh.Web
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBlogService, BlogService>();
+            services.AddTransient<IEstateService, EstateService>();
             services.AddTransient<IViewRenderService, RenderViewToString>();
 
             #endregion

@@ -1,0 +1,151 @@
+﻿@model Kashaneh.DataLayer.Entities.Estate.Estate
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>ثبت ملک جدید </h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype = "multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CreateDuration" class="control-label"></label>
+                    <input asp-for="CreateDuration" class="form-control" />
+                    <span asp-validation-for="CreateDuration" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Area" class="control-label"></label>
+                    <input asp-for="Area" class="form-control" />
+                    <span asp-validation-for="Area" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BedRooms" class="control-label"></label>
+                    <input asp-for="BedRooms" class="form-control" />
+                    <span asp-validation-for="BedRooms" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BathRooms" class="control-label"></label>
+                    <input asp-for="BathRooms" class="form-control" />
+                    <span asp-validation-for="BathRooms" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Floors" class="control-label"></label>
+                    <input asp-for="Floors" class="form-control" />
+                    <span asp-validation-for="Floors" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+               
+                <div class="form-group">
+                    <label asp-for="Picture" class="control-label"></label>
+                    <input type="file" name="images" multiple="multiple" asp-for="Picture" class="form-control" />
+                    <span asp-validation-for="Picture" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShortDescription" class="control-label"></label>
+                    <input asp-for="ShortDescription" class="form-control" />
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tags" class="control-label"></label>
+                    <input asp-for="Tags" class="form-control" />
+                    <p class="help-block">کلمات را با - جدا کنید</p>
+                    <span asp-validation-for="Tags" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Facilities" class="control-label"></label>
+                    <input asp-for="Facilities" class="form-control" />
+                    <p class="help-block">امکانات را با - جدا کنید</p>
+                    <span asp-validation-for="Facilities" class="text-danger"></span>
+                </div>
+               
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="EstateTypeId" class="control-label"></label>
+                    <select asp-for="EstateTypeId" class="form-control" asp-items="@(ViewData["Types"]as SelectList)"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SubEstateType" class="control-label"></label>
+                    <select asp-for="SubEstateType" class="form-control" asp-items="@(ViewData["SubTypes"]as SelectList)"></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="StatusId" class="control-label"></label>
+                    <select asp-for="StatusId" class="form-control" asp-items="@(ViewData["Status"]as SelectList)"></select>
+               
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CityId" class="control-label"></label>
+                    <select asp-for="CityId" class="form-control" asp-items="@(ViewData["Cities"] as SelectList)"></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Region" class="control-label"></label>
+                    <select asp-for="Region" class="form-control" asp-items="@(ViewData["SubCities"] as SelectList)"></select>
+                </div>
+
+              
+            </div>
+          
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $("#CityId").change(function () {
+            $("#Region").empty();
+            $.getJSON("/home/GetSubCity/" + $("#CityId :selected").val(),
+                function (data) {
+
+                    $.each(data,
+                        function () {
+                            $("#Region").append('<option value=' + this.value + '>' + this.text + '</option>');
+
+                        });
+
+                });
+
+        });
+        $("#EstateTypeId").change(function () {
+            $("#SubEstateType").empty();
+            $.getJSON("/home/GetSubTypes/" + $("#EstateTypeId :selected").val(),
+                function (data) {
+
+                    $.each(data,
+                        function () {
+                            $("#SubEstateType").append('<option value=' + this.value + '>' + this.text + '</option>');
+
+                        });
+
+                });
+        });
+    </script>
+}

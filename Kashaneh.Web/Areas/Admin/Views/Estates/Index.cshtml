@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Kashaneh.DataLayer.Entities.Estate.Estate>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>لیست املاک</h1>
+
+<p>
+    <a asp-action="Create">ایجاد ملک جدید</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.BedRooms)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.City.CityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstateType.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.UserName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+               @if (item.StatusId==1)
+               {
+                   <label>برای خرید</label>
+               }
+               else
+               {
+                   <label>برای رهن و اجاره</label>
+               }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.BedRooms)
+            </td>
+            <td>
+               <img src="/EstateImages/@item.Picture" class="thumbnail"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstateType.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EstateId">ویرایش</a> |
+                <a asp-action="Details" asp-route-id="@item.EstateId">جزئیات</a> |
+                <a asp-action="Delete" asp-route-id="@item.EstateId">حذف</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

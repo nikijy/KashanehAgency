@@ -25,7 +25,11 @@ namespace Kashaneh.DataLayer.Entities.Estate
         [ForeignKey("ParentId")]
         public virtual List<City> Cities { get; set; }
 
+        [InverseProperty("City")]
         public virtual List<Estate> Estates { get; set; }
+
+        [InverseProperty("Zone")]
+        public virtual List<Estate> Zone { get; set; }
 
         #endregion
     }

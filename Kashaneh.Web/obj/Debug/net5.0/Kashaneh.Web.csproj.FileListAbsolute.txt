@@ -197,3 +197,8 @@ F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Views\Shared\_Validatio
 F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Views\Shared\Components\RegisterComponent\_Register.cshtml.g.cs
 F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Views\Shared\Components\LoginComponent\_Login.cshtml.g.cs
 F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Views\Shared\Components\SearchComponent\_Search.cshtml.g.cs
+F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Areas\Admin\Views\Estates\Create.cshtml.g.cs
+F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Areas\Admin\Views\Estates\Delete.cshtml.g.cs
+F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Areas\Admin\Views\Estates\Details.cshtml.g.cs
+F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Areas\Admin\Views\Estates\Edit.cshtml.g.cs
+F:\Kashaneh\Kashaneh\Kashaneh.Web\obj\Debug\net5.0\Razor\Areas\Admin\Views\Estates\Index.cshtml.g.cs
