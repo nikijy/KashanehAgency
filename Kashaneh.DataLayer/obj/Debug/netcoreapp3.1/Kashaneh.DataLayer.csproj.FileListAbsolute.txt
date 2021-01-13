@@ -3,10 +3,10 @@ F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\bin\Debug\netcoreapp3.1\Kashaneh.DataLay
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\bin\Debug\netcoreapp3.1\Kashaneh.DataLayer.runtimeconfig.dev.json
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\bin\Debug\netcoreapp3.1\Kashaneh.DataLayer.dll
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\bin\Debug\netcoreapp3.1\Kashaneh.DataLayer.pdb
+F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.csprojAssemblyReference.cache
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.AssemblyInfoInputs.cache
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.AssemblyInfo.cs
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.csproj.CoreCompileInputs.cache
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.dll
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.pdb
 F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.genruntimeconfig.cache
-F:\Kashaneh\Kashaneh\Kashaneh.DataLayer\obj\Debug\netcoreapp3.1\Kashaneh.DataLayer.csprojAssemblyReference.cache

@@ -4,14 +4,16 @@ using Kashaneh.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kashaneh.DataLayer.Migrations
 {
     [DbContext(typeof(KashanehContext))]
-    partial class KashanehContextModelSnapshot : ModelSnapshot
+    [Migration("20210112124455_twotables")]
+    partial class twotables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,6 +159,9 @@ namespace Kashaneh.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("EstateImageId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("EstateStatusStatusId")
                         .HasColumnType("int");

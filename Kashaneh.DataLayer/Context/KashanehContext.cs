@@ -24,6 +24,7 @@ namespace Kashaneh.DataLayer.Context
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<NewsLetter> NewsLetters { get; set; }
         public DbSet<UserMessage> UserMessages { get; set; }
+        public DbSet<LikedEstate> LikedEstates { get; set; }
 
         #endregion
 
@@ -40,6 +41,7 @@ namespace Kashaneh.DataLayer.Context
         public DbSet<Estate> Estates { get; set; }
         public DbSet<EstateStatus> EstateStatuses { get; set; }
         public DbSet<EstateType> EstateTypes { get; set; }
+        public DbSet<EstateImage> EstateImages { get; set; }
 
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)

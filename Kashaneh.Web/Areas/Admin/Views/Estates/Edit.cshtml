@@ -13,7 +13,8 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EstateId"/>
-            <input type="hidden" asp-for="Picture" value="@Model.Picture"/>
+            <input type="hidden" name="images" value="@Model.EstateImages"/>
+
             <div class="col-md-8">
                 <div class="form-group">
                     <label asp-for="Price" class="control-label"></label>
@@ -51,9 +52,9 @@
                     <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Picture" class="control-label"></label>
-                    <input type="file" name="images" multiple="multiple" asp-for="Picture" class="form-control"/>
-                    <span asp-validation-for="Picture" class="text-danger"></span>
+                    <label class="control-label">تصاویر</label>
+
+                    <input type="file" name="images" multiple="multiple" class="form-control"/>
                 </div>
                 <div class="form-group">
                     <label asp-for="ShortDescription" class="control-label"></label>

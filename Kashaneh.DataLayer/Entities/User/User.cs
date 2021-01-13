@@ -18,7 +18,8 @@ namespace Kashaneh.DataLayer.Entities.User
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0}نمیتواند بیشتر از {1}کاراکتر باشد")]
         public string UserName { get; set; }
-
+        [Display(Name = "املاک پسندیده شده")]
+        public int? LikedEstateId { get; set; }
         [Display(Name = "ایمیل")]
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0}نمیتواند بیشتر از {1}کاراکتر باشد")]
@@ -56,13 +57,15 @@ namespace Kashaneh.DataLayer.Entities.User
         [Display(Name = "تاریخ ثبت نام")]
         public DateTime RegisterDate { get; set; }
         [Display(Name = "حذف شده؟")]
-        public bool IsDeleted { get; set; }  
+        public bool IsDeleted { get; set; }
 
         #region MyRegion
 
         public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<Blog.Blog> Blogs { get; set; }
         public virtual List<Estate.Estate> Estates { get; set; }
+        public virtual List<LikedEstate> LikedEstates { get; set; }
+        
         #endregion
     }
 }

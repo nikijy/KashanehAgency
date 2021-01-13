@@ -30,7 +30,11 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
         // GET: Admin/Estates
         public async Task<IActionResult> Index()
         {
-            var kashanehContext = _context.Estates.Include(e => e.City).Include(e => e.EstateType).Include(e => e.User);
+            var kashanehContext = _context.Estates
+                .Include(e => e.City)
+                .Include(e => e.EstateType)
+                .Include(e => e.User)
+                .Include(p => p.EstateImages);
             return View(await kashanehContext.ToListAsync());
         }
 
@@ -46,6 +50,7 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
                 .Include(e => e.City)
                 .Include(e => e.EstateType)
                 .Include(e => e.User)
+                .Include(p => p.EstateImages.First())
                 .FirstOrDefaultAsync(m => m.EstateId == id);
             if (estate == null)
             {
@@ -85,22 +90,32 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
             estate.UserId = userId;
             estate.IsDeleted = false;
             estate.CreateDate = DateTime.Now;
-            if (images.Count() > 0)
-            {
-                foreach (var files in images)
-                {
-                    var fileName = Path.GetFileName(files.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\EstateImages", fileName);
-                    await using (var fileSteam = new FileStream(filePath, FileMode.Create))
-                    {
-                        await files.CopyToAsync(fileSteam);
-                    }
-                    estate.Picture = fileName;
-                }
-            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(estate);
+                await _context.SaveChangesAsync();
+                if (images.Any())
+                {
+                    foreach (var files in images)
+                    {
+                        var fileName = Path.GetFileName(files.FileName);
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\EstateImages", fileName);
+                        await using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                        {
+                            await files.CopyToAsync(fileSteam);
+                        }
+                        EstateImage estateImage = new EstateImage()
+                        {
+                            EstateId = estate.EstateId,
+                            Image = fileName
+                        };
+
+                        await _context.EstateImages.AddAsync(estateImage);
+                    }
+                }
+
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -145,9 +160,14 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EstateId,EstateTypeId,Picture,SubEstateType,Region,StatusId,CityId,Price,CreateDuration,Area,BedRooms,BathRooms,Floors,Address,ShortDescription,Description,Tags,Facilities")] Estate estate, IEnumerable<IFormFile> images)
+        public async Task<IActionResult> Edit(int id, [Bind("EstateId,EstateTypeId,SubEstateType,Region,StatusId,CityId,Price,CreateDuration,Area,BedRooms,BathRooms,Floors,Address,ShortDescription,Description,Tags,Facilities")] Estate estate, IEnumerable<IFormFile> images)
         {
-            var userId = _userService.GetUserIdByUserName(User.Identity.Name);
+            int userId = _userService.GetUserIdByUserName(User.Identity.Name);
+
+            var pics = _context.EstateImages
+                .Where(e => e.EstateId == estate.EstateId)
+                .ToList();
+
             estate.UserId = userId;
             estate.CreateDate = DateTime.Now;
             estate.IsDeleted = false;
@@ -156,105 +176,113 @@ namespace Kashaneh.Web.Areas.Admin.Controllers
                 return NotFound();
             }
 
-
-            if (images == null)
+            if (ModelState.IsValid)
             {
-                estate.Picture = estate.Picture;
-            }
+                if (!images.Any())
+                {
+                    estate.EstateImages = pics;
+                }
 
-
-            if (images.Count() > 0)
-            {
-                foreach (var files in images)
+                if (images.Any())
                 {
                     string imagePath = "";
-                    if (estate.Picture != files.FileName)
+                    foreach (var names in pics)
                     {
                         imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\EstateImages",
-                            estate.Picture);
+                            names.Image);
+                       
                         if (System.IO.File.Exists(imagePath))
                         {
                             System.IO.File.Delete(imagePath);
+
+                            _context.EstateImages.Remove(names);
                         }
                     }
 
-                    if (images != null && files.Length > 0)
+
+                    foreach (var file in images)
                     {
-
-                        var fileName = Path.GetFileName(files.FileName);
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\EstateImages", fileName);
-                        await using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                        if (file.Length > 0)
                         {
-                            await files.CopyToAsync(fileSteam);
+                            var fileName = Path.GetFileName(file.FileName);
+                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\EstateImages", fileName);
+                            await using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileSteam);
+                            }
+
+
+                            EstateImage estateImage = new EstateImage()
+                            {
+                                EstateId = id,
+                                Image = fileName
+                            };
+                            _context.EstateImages.Update(estateImage);
+                            await _context.SaveChangesAsync();
                         }
-
-                        estate.Picture = fileName;
-
                     }
                 }
-            }
 
-            if (ModelState.IsValid)
+                try
                 {
-                    try
+                    _context.Update(estate);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EstateExists(estate.EstateId))
                     {
-                        _context.Update(estate);
-                        await _context.SaveChangesAsync();
+                        return NotFound();
                     }
-                    catch (DbUpdateConcurrencyException)
+                    else
                     {
-                        if (!EstateExists(estate.EstateId))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
+                        throw;
                     }
-                    return RedirectToAction(nameof(Index));
                 }
-                ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "CityName", estate.CityId);
-                ViewData["EstateTypeId"] = new SelectList(_context.EstateTypes, "EstateTypeId", "Type", estate.EstateTypeId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", estate.UserId);
-                return View(estate);
-            }
-
-            // GET: Admin/Estates/Delete/5
-            public async Task<IActionResult> Delete(int? id)
-            {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                var estate = await _context.Estates
-                    .Include(e => e.City)
-                    .Include(e => e.EstateType)
-                    .Include(e => e.User)
-                    .FirstOrDefaultAsync(m => m.EstateId == id);
-                if (estate == null)
-                {
-                    return NotFound();
-                }
-
-                return View(estate);
-            }
-
-            // POST: Admin/Estates/Delete/5
-            [HttpPost, ActionName("Delete")]
-            [ValidateAntiForgeryToken]
-            public async Task<IActionResult> DeleteConfirmed(int id)
-            {
-                var estate = await _context.Estates.FindAsync(id);
-                _context.Estates.Remove(estate);
-                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CityId"] = new SelectList(_context.Cities, "CityId", "CityName", estate.CityId);
+            ViewData["EstateTypeId"] = new SelectList(_context.EstateTypes, "EstateTypeId", "Type", estate.EstateTypeId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", estate.UserId);
+            return View(estate);
+        }
 
-            private bool EstateExists(int id)
+        // GET: Admin/Estates/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
             {
-                return _context.Estates.Any(e => e.EstateId == id);
+                return NotFound();
             }
+
+            var estate = await _context.Estates
+                .Include(e => e.City)
+                .Include(e => e.EstateType)
+                .Include(e => e.User)
+                .Include(p => p.EstateImages.First())
+                .FirstOrDefaultAsync(m => m.EstateId == id);
+            if (estate == null)
+            {
+                return NotFound();
+            }
+
+            return View(estate);
+        }
+
+        // POST: Admin/Estates/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var estate = await _context.Estates.FindAsync(id);
+            estate.IsDeleted = true;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool EstateExists(int id)
+        {
+            return _context.Estates.Any(e => e.EstateId == id);
         }
     }
+}

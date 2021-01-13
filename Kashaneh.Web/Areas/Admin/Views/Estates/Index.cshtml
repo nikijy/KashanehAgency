@@ -24,9 +24,9 @@
                 @Html.DisplayNameFor(model => model.BedRooms)
             </th>
            
-            <th>
-                @Html.DisplayNameFor(model => model.Picture)
-            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.EstateImageId)
+            </th>*@
            
             <th>
                 @Html.DisplayNameFor(model => model.City.CityName)
@@ -60,9 +60,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BedRooms)
             </td>
-            <td>
-               <img src="/EstateImages/@item.Picture" class="thumbnail"/>
-            </td>
+            @*<td>
+               <img src="/EstateImages/@item.EstateImageId" class="thumbnail" style="height: 100px; width: 100px;"/>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.City.CityName)
             </td>

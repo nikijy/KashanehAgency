@@ -73,12 +73,12 @@
         <dd class = "col-sm-10">
            <label>@Model.CreateDate.ToShamsi()</label>
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Picture)
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EstateImageId)
         </dt>
         <dd class = "col-sm-10">
-           <img src="/EstateImages/@Model.Picture" class="thumbnail"/>
-        </dd>
+           <img src="/EstateImages/@Model.EstateImageId" class="thumbnail" style="height: 100px; width: 100px;"/>
+        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ShortDescription)
         </dt>
@@ -104,19 +104,19 @@
             @Html.DisplayFor(model => model.Facilities)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.City.CityName)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.City.CityName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EstateType)
+            @Html.DisplayNameFor(model => model.EstateType.Type)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EstateType.Type)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.User.UserName)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.User.UserName)

@@ -4,14 +4,16 @@ using Kashaneh.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kashaneh.DataLayer.Migrations
 {
     [DbContext(typeof(KashanehContext))]
-    partial class KashanehContextModelSnapshot : ModelSnapshot
+    [Migration("20210112134028_changesss")]
+    partial class changesss
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

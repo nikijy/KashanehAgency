@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Kashaneh.DataLayer.Entities.User;
 
 namespace Kashaneh.DataLayer.Entities.Estate
 {
@@ -28,10 +29,11 @@ namespace Kashaneh.DataLayer.Entities.Estate
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         public int CityId { get; set; }
         [Display(Name = "منطقه")]
-        public int?  Region { get; set; }
+        public int? Region { get; set; }
         [Display(Name = "کاربر")]
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         public int UserId { get; set; }
+        
         [Display(Name = "قیمت")]
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         public int Price { get; set; }
@@ -55,9 +57,6 @@ namespace Kashaneh.DataLayer.Entities.Estate
         public string Address { get; set; }
         [Display(Name = "تاریخ ایجاد")]
         public DateTime CreateDate { get; set; }
-        [Display(Name = "تصویر")]
-        [MaxLength(600, ErrorMessage = "{0}نمیتواند بیشتر از {1}کاراکتر باشد")]
-        public string Picture { get; set; }
         [Display(Name = "توضیح کوتاه")]
         [Required(ErrorMessage = "لطفا{0}را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0}نمیتواند بیشتر از {1}کاراکتر باشد")]
@@ -91,9 +90,11 @@ namespace Kashaneh.DataLayer.Entities.Estate
         [ForeignKey("SubEstateType")]
         public EstateType SubType { get; set; }
 
-        public virtual User.User User { get; set; } 
+        public virtual User.User User { get; set; }
+        public virtual LikedEstate LikedEstate { get; set; }
+        public List<EstateImage> EstateImages { get; set; }
 
-        
+       
 
         #endregion
     }
