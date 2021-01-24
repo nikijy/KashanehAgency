@@ -23,7 +23,7 @@ namespace Kashaneh.Core.Senders
             // mail.Attachments.Add(attachment);
 
             SmtpServer.Port = 587;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("nikitmb2@gmail.com", "n13781127");
+            SmtpServer.Credentials = new System.Net.NetworkCredential("***", "***");
             SmtpServer.EnableSsl = true;
 
             SmtpServer.Send(mail);
